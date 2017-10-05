@@ -18,3 +18,9 @@ luego se iniciará sesión con un usuario que no existe en la base de dato y fin
 una contraseña incorrecta.
 9. En Update se actualizará el correo y la contraseña del usuario rachel que fue creado previamente.
 10. Finalmente en la prueba de Delete se eliminará el usuario msharapova que fue credo previamente.
+
+Notas
+1. Todas las peticiones a la API se hace mediante el metodo POST.
+2. El resultado de todas las pruebas se puede ver tanto en la linea de comandos como en el archivo de vista .jade
+3. Para las pruebas de login además de usar POSTMAN se puede hacer directamente con el archivo loginform.html, el
+cual despriega un sencillo formulario para realizar la prueba desde un navegador.
