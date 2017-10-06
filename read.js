@@ -42,7 +42,7 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
 
     var con = mysql.createConnection(dbconfig);
-    var usersString = "";
+    var usersJson = "[";
 
     con.connect(function(err) {
         if (err) throw err;
@@ -52,15 +52,20 @@ router.post('/', function(req, res, next) {
 
             //this for save result in a string
             for(i = 0; i < result.length; i++) {
-                usersString = usersString + "id: " + result[i].id + "\n"
-                    + "fist name: " + result[i].first_name + "\n"
-                    + "last name: " + result[i].last_name + "\n"
-                    + "email: " + result[i].email + "\n"
-                    + "password: " + result[i]["password"] + "\n"
-                    + "User name: " + result[i].Username + "\n\n";
+                usersJson = usersJson + '{'+'"id":' + '"'+result[i].id+'",'
+                    + '"fist name":' + '"'+result[i].first_name+'",'
+                    + '"last name":' + '"'+result[i].last_name+'",'
+                    + '"email":' + '"'+result[i].email+'",'
+                    + '"password":' + '"'+result[i]["password"]+'",'
+                    + '"User name":' + '"'+result[i].Username+'"}';
+
+                if(i != (result.length - 1)) {
+                    usersJson = usersJson+',';
+                }
 
             }
-            res.render('read', {output: usersString });
+            usersJson = usersJson+']';
+            res.render('read', {output: usersJson });
             con.end();
 
         });

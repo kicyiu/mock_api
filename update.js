@@ -16,6 +16,8 @@ router.post('/', function(req, res, next) {
 
     var con = mysql.createConnection(dbconfig);
 
+    var messageJson;
+
     con.connect(function(err) {
         if (err) throw err;
         var sql = "UPDATE MOCK_DATA SET " +
@@ -26,8 +28,16 @@ router.post('/', function(req, res, next) {
             "WHERE Username = "+"'"+userName+"'";
         con.query(sql, function (err, result) {
             if (err) throw err;
-            console.log(result.affectedRows + " record(s) updated");
-            res.render('create', {output: result.affectedRows + " record(s) updated"});
+            if(result.affectedRows != 0) {
+                messageJson = '[{' + '"message"' + ':"' + result.affectedRows + ' record(s) updated"}]';
+                console.log(result.affectedRows + " record(s) updated");
+                res.render('update', {output: messageJson});
+            }
+            else {
+                console.log("Failed to update, user name does not exist");
+                messageJson ='[{"message":"Failed to update, user name does not exist"}]';
+                res.render('update', {output: messageJson});
+            }
             con.end();
         });
 
